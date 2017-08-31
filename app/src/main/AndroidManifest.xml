@@ -20,7 +20,7 @@
         </activity>
 
         <!--动态权限申请界面-->
-        <activity android:name="com.wkp.runtimepermissions.activity.InvisibleActivity"/>
+        <activity android:name="com.wkp.runtimepermissions.activity.InvisibleActivity" android:theme="@style/InvisibleThem"/>
     </application>
 
 </manifest>
