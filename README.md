@@ -3,7 +3,7 @@
 <br>
 <br>
 ## Gradle集成
-compile 'com.wkp:RuntimePermission:1.0.2'
+compile 'com.wkp:RuntimePermission:1.0.4'
 <br>
 <br>
 ## 使用举例
@@ -12,7 +12,7 @@ compile 'com.wkp:RuntimePermission:1.0.2'
 \<!--权限配置--><br>
 `<uses-permission android:name="android.permission.CAMERA"/>`<br>
 \<!--动态权限申请界面--><br>
-`<activity android:name="com.wkp.runtimepermissions.activity.InvisibleActivity"/>`
+`<activity android:name="com.wkp.runtimepermissions.activity.InvisibleActivity" android:theme="@style/InvisibleThem"/>`
 <br>
 <br>
 2.代码示例<br>
