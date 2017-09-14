@@ -13,8 +13,8 @@ android {
 //        applicationId "com.wkp.runtimepermissions"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 4
+        versionName "1.0.4"
 
     }
     buildTypes {
@@ -146,7 +146,7 @@ publish {
     userOrg = 'wkp'
     groupId = 'com.wkp'
     artifactId = 'RuntimePermission'
-    publishVersion = '1.0.3'
+    publishVersion = '1.0.4'
     desc = 'a library to help to manage runtime permission'
     website = 'https://github.com/wkp111/RuntimePermission'
 }
