@@ -3,7 +3,7 @@
 <br>
 <br>
 ## Gradle集成
-compile 'com.wkp:RuntimePermission:1.0.3'
+compile 'com.wkp:RuntimePermission:1.0.4'
 <br>
 <br>
 ## 使用举例
