@@ -7,6 +7,8 @@
 
 dependencies{
       compile 'com.wkp:RuntimePermission:1.0.4'
+      //Android Studio3.0+可用以下方式
+      //implementation 'com.wkp:RuntimePermission:1.0.4'
 }
 ```
 Note：可能存在Jcenter还在审核阶段，这时会集成失败！
