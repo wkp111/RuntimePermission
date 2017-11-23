@@ -18,9 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <!--动态权限申请界面-->
-        <activity android:name="com.wkp.runtimepermissions.activity.InvisibleActivity" android:theme="@style/InvisibleThem"/>
     </application>
 
 </manifest>
