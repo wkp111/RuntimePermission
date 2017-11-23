@@ -6,9 +6,9 @@
 ```groovy
 
 dependencies{
-      compile 'com.wkp:RuntimePermission:1.0.4'
+      compile 'com.wkp:RuntimePermission:1.0.5'
       //Android Studio3.0+可用以下方式
-      //implementation 'com.wkp:RuntimePermission:1.0.4'
+      //implementation 'com.wkp:RuntimePermission:1.0.5'
 }
 ```
 Note：可能存在Jcenter还在审核阶段，这时会集成失败！
@@ -18,13 +18,10 @@ Note：可能存在Jcenter还在审核阶段，这时会集成失败！
 申请CAMERA权限<br><br>
 1.manifest配置<br>
 ```xml
-
     <!--权限配置-->
     <uses-permission android:name="android.permission.CAMERA"/>
-    <!--动态权限申请界面-->
-    <activity android:name="com.wkp.runtimepermissions.activity.InvisibleActivity" android:theme="@style/InvisibleThem"/>
 ```
-Note：内置界面为透明界面，不影响界面效果！
+Note：举例权限，根据自己需求选取！
 <br>
 <br>
 2.代码示例<br>
@@ -64,6 +61,8 @@ QQ邮箱：1535514884@qq.com<br/>
 Gmail邮箱：wkp15889686524@gmail.com<br/>
 
 ## 版本更新<br/>
+* v1.0.5<br/>
+内置透明界面移入库中，方便操作<br/><br/>
 * v1.0.4<br/>
 改善内置界面显示效果，达到透明效果<br/><br/>
 * v1.0.3<br/>
