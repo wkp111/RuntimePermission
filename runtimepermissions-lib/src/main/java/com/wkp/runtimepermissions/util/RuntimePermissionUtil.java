@@ -60,6 +60,7 @@ public class RuntimePermissionUtil {
 
     public static final String KEY_PERMISSION = "permission";
     public static final String KEY_CALL_BACK = "call_back";
+    public static final String FLAG_CONNECTION = ";";
     private static PermissionCallBack sCallBack;
 
     @StringDef({CALENDAR,CAMERA,CONTACTS,LOCATION,MICROPHONE,PHONE,SENSORS,SMS,STORAGE})
@@ -98,7 +99,13 @@ public class RuntimePermissionUtil {
      * @return
      */
     private static boolean hasPermission(Context context, String permission) {
-        return ContextCompat.checkSelfPermission(context,permission) == PackageManager.PERMISSION_GRANTED;
+        String[] permissions = permission.split(FLAG_CONNECTION);
+        for (String s : permissions) {
+            if (ContextCompat.checkSelfPermission(context,s) == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -110,31 +117,34 @@ public class RuntimePermissionUtil {
         String permission = null;
         switch (permissionGroup) {
             case CALENDAR:
-                permission = Manifest.permission.READ_CALENDAR;
+                permission = Manifest.permission.READ_CALENDAR + ";" + Manifest.permission.WRITE_CALENDAR;
                 break;
             case CAMERA:
                 permission = Manifest.permission.CAMERA;
                 break;
             case CONTACTS:
-                permission = Manifest.permission.READ_CONTACTS;
+                permission = Manifest.permission.READ_CONTACTS + ";" + Manifest.permission.WRITE_CONTACTS + ";" + Manifest.permission.GET_ACCOUNTS;
                 break;
             case LOCATION:
-                permission = Manifest.permission.ACCESS_FINE_LOCATION;
+                permission = Manifest.permission.ACCESS_FINE_LOCATION + ";" + Manifest.permission.ACCESS_COARSE_LOCATION;
                 break;
             case MICROPHONE:
                 permission = Manifest.permission.RECORD_AUDIO;
                 break;
             case PHONE:
-                permission = Manifest.permission.READ_PHONE_STATE;
+                permission = Manifest.permission.READ_PHONE_STATE + ";" + Manifest.permission.CALL_PHONE + ";" + Manifest.permission.READ_CALL_LOG
+                        + ";" + Manifest.permission.WRITE_CALL_LOG + ";" + Manifest.permission.ADD_VOICEMAIL + ";" + Manifest.permission.USE_SIP
+                        + ";" + Manifest.permission.PROCESS_OUTGOING_CALLS;
                 break;
             case SENSORS:
                 permission = Manifest.permission.BODY_SENSORS;
                 break;
             case SMS:
-                permission = Manifest.permission.READ_SMS;
+                permission = Manifest.permission.READ_SMS + ";" + Manifest.permission.RECEIVE_SMS + ";" + Manifest.permission.SEND_SMS
+                        + ";" + Manifest.permission.RECEIVE_WAP_PUSH + ";" + Manifest.permission.RECEIVE_MMS;
                 break;
             case STORAGE:
-                permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+                permission = Manifest.permission.READ_EXTERNAL_STORAGE + ";" + Manifest.permission.WRITE_EXTERNAL_STORAGE;
                 break;
         }
         return permission;

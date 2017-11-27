@@ -2,6 +2,7 @@ package com.wkp.runtimepermissions.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -32,13 +33,13 @@ public class InvisibleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mPermission = getIntent().getStringExtra(RuntimePermissionUtil.KEY_PERMISSION);
         mCallBack = RuntimePermissionUtil.getCallBack();
-        ActivityCompat.requestPermissions(this, new String[]{mPermission},REQUEST_PERMISSION_CODE);
+        ActivityCompat.requestPermissions(this, mPermission.split(RuntimePermissionUtil.FLAG_CONNECTION), REQUEST_PERMISSION_CODE);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        mCallBack.onCheckPermissionResult(ContextCompat.checkSelfPermission(this, mPermission) == PackageManager.PERMISSION_GRANTED);
+        mCallBack.onCheckPermissionResult(hasPermission(this, mPermission));
         finish();
     }
 
@@ -46,22 +47,31 @@ public class InvisibleActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mCallBack.onCheckPermissionResult(true);
+            for (int grantResult : grantResults) {
+                if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                    mCallBack.onCheckPermissionResult(true);
+                    finish();
+                    return;
+                }
+            }
+            boolean rationale = false;
+            for (String permission : permissions) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                    rationale = true;
+                    break;
+                }
+            }
+            if (rationale) {
+                mCallBack.onCheckPermissionResult(false);
                 finish();
-            }else {
-                boolean rationale = ActivityCompat.shouldShowRequestPermissionRationale(this, mPermission);
-                if (rationale) {
+            } else {
+                if (SPUtils.getInt(this, KEY_VERSION_CODE, 0) < BuildConfig.VERSION_CODE) {
+                    SPUtils.put(this, KEY_VERSION_CODE, BuildConfig.VERSION_CODE);
                     mCallBack.onCheckPermissionResult(false);
                     finish();
-                }else {
-                    if (SPUtils.getInt(this, KEY_VERSION_CODE, 0) < BuildConfig.VERSION_CODE) {
-                        SPUtils.put(this,KEY_VERSION_CODE,BuildConfig.VERSION_CODE);
-                        mCallBack.onCheckPermissionResult(false);
-                        finish();
-                        return;
-                    }
-                    startAppInfoActivity();
+                    return;
+                }
+                startAppInfoActivity();
 //                    switch (Build.BRAND) {
 //                        case "HUAWEI":
 //                            startHuaWeiPermissionActivity();
@@ -91,9 +101,36 @@ public class InvisibleActivity extends AppCompatActivity {
 //                            startAppInfoActivity();
 //                            break;
 //                    }
-                }
             }
         }
+    }
+
+    /**
+     * 跳转应用程序信息设置界面
+     */
+    private void startAppInfoActivity() {
+        Intent localIntent = new Intent();
+        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        localIntent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        localIntent.setData(Uri.fromParts("package", getPackageName(), null));
+        startActivity(localIntent);
+    }
+
+    /**
+     * 判断权限
+     *
+     * @param context
+     * @param permission
+     * @return
+     */
+    private boolean hasPermission(Context context, String permission) {
+        String[] permissions = permission.split(RuntimePermissionUtil.FLAG_CONNECTION);
+        for (String s : permissions) {
+            if (ContextCompat.checkSelfPermission(context, s) == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -187,18 +224,6 @@ public class InvisibleActivity extends AppCompatActivity {
         intent.setComponent(comp);
         startActivity(intent);
     }
-
-    /**
-     * 跳转应用程序信息设置界面
-     */
-    private void startAppInfoActivity() {
-        Intent localIntent = new Intent();
-        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        localIntent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        localIntent.setData(Uri.fromParts("package", getPackageName(), null));
-        startActivity(localIntent);
-    }
-
 
     /**
      * 跳转本应用权限管理界面

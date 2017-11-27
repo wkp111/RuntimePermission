@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void applyPermission(final View view) {
         //权限检查，回调是权限申请结果
-        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.CAMERA, new PermissionCallBack() {
+        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.SMS, new PermissionCallBack() {
             @Override
             public void onCheckPermissionResult(boolean hasPermission) {
                 if (hasPermission) {
