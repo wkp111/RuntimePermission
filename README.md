@@ -6,9 +6,9 @@
 ```groovy
 
 dependencies{
-      compile 'com.wkp:RuntimePermission:1.0.5'
+      compile 'com.wkp:RuntimePermission:1.0.6'
       //Android Studio3.0+可用以下方式
-      //implementation 'com.wkp:RuntimePermission:1.0.5'
+      //implementation 'com.wkp:RuntimePermission:1.0.6'
 }
 ```
 Note：可能存在Jcenter还在审核阶段，这时会集成失败！
@@ -70,6 +70,8 @@ QQ邮箱：1535514884@qq.com<br/>
 Gmail邮箱：wkp15889686524@gmail.com<br/>
 
 ## 版本更新<br/>
+* v1.0.6<br/>
+修复多权限申请时部分权限不显示BUG<br/><br/>
 * v1.0.5<br/>
 内置透明界面移入库中，方便操作<br/><br/>
 * v1.0.4<br/>
