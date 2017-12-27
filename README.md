@@ -1,5 +1,5 @@
 # RuntimePermission [ ![Download](https://api.bintray.com/packages/wkp/maven/RuntimePermission/images/download.svg) ](https://bintray.com/wkp/maven/RuntimePermission/_latestVersion)
-动态权限管理库
+Android6.0动态权限管理库，回调模式管理动态权限，无需关注申请权限各种状态，只用关心回调是否有权限，然后做不同逻辑处理！
 ## 演示图
 ![DragGridView](https://github.com/wkp111/RuntimePermission/blob/master/RuntimePermission.gif "演示图")
 ## Gradle集成
